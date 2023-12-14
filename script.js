@@ -51,12 +51,18 @@ function playRound(playerSelection, computerSelection) {
         }
     } 
 }
+   
+const buttons = document.querySelectorAll("button");
+const msg = document.querySelector(".msg");
+const scoreText = document.querySelector(".score");
+const final = document.querySelector(".final");
 
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt("Let's play Rock Paper Scissors! Choose Rock, Paper, or Scissors");
+let playerScore = 0;
+let computerScore = 0;
+
+buttons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        let playerSelection = button.innerHTML;
         let computerSelection = getComputerChoice();
         let statement = playRound(playerSelection, computerSelection)
         if (statement.includes("Win")) {
@@ -64,15 +70,16 @@ function game() {
         } else if (statement.includes("Lose")) {
             computerScore += 1
         }
-        console.log(statement)
-    }
-    if (playerScore > computerScore) {
-        console.log("You won the game! " + playerScore + " to " + computerScore)
-    } else if (playerScore < computerScore) {
-        console.log("You lost the game! " + playerScore + " to " + computerScore)
-    } else {
-        console.log("You tied the game! " + playerScore + " to " + computerScore)
-    }
-}
-   
-game()
+        scoreText.innerHTML = "Player Score: " + playerScore + " Computer Score: " + computerScore
+        msg.innerHTML = statement;
+        if (playerScore == 5) {
+            final.innerHTML = "You won the game! " + playerScore + " to " + computerScore
+        } else if (computerScore == 5) {
+            final.innerHTML = "You lost the game! " + playerScore + " to " + computerScore
+        } else {
+            console.log("You tied the game! " + playerScore + " to " + computerScore)
+        }
+    });
+});
+
+
